@@ -580,6 +580,7 @@ func (a *MachineActuator) kubeadmUpOrDowngrade(machine *clusterv1.Machine, node 
 	} else if installer.Name == "ubuntu" {
 		b.AddResource(
 			"upgrade:node-unlock-kubernetes",
+			// edit to ubuntu-specific locking
 			&resource.Run{Script: object.String("yum versionlock delete 'kube*' || true")})
 	}
 	b.AddResource(
@@ -634,6 +635,7 @@ func (a *MachineActuator) kubeadmUpOrDowngrade(machine *clusterv1.Machine, node 
 	} else if installer.Name == "ubuntu" {
 		b.AddResource(
 			"upgrade:node-lock-kubernetes",
+			// edit to ubuntu-specific locking
 			&resource.Run{Script: object.String("yum versionlock add 'kube*' || true")},
 			plan.DependOn("upgrade:node-kubectl"))
 	}
