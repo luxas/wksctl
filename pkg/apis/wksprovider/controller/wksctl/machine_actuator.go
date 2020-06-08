@@ -575,14 +575,14 @@ func OSUpgradeCommands(installer *os.OS, lockingState bool) (*, string, error) {
 		packageManager = &resource.RPM
 		if lockingState {
 			command = "yum versionlock add 'kube*' || true"
-		} else if != lockingState {
+		} else if !lockingState {
 			command = "yum versionlock delete 'kube*' || true"
 		}
 	} else if installer.Name == "ubuntu" {
 		packageManager = &resource.Deb
 		if lockingState {
 			command = "apt-mark hold 'kube*' || true"
-		} else if != lockingState {
+		} else if !lockingState {
 			command = "apt-mark unhold 'kube*' || true"
 		}
 	}
