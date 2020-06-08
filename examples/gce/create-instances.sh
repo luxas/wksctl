@@ -13,7 +13,7 @@ ensure_ssh_key() {
 ensure_ssh_key cluster-key
 echo "wks:$(cat ./cluster-key.pub | awk '{print $1" "$2" wks"}')" > ssh_key.list
 
-gcloud compute --project="${project}" instances create ${user}-wks-{1,2,3,4,5,6} \
+gcloud compute --project="${project}" instances create ${user}-wks-{1,2,3} \
   --network="${network}" \
   --zone="${zone}" \
   --metadata-from-file="ssh-keys=ssh_key.list" \
@@ -21,20 +21,14 @@ gcloud compute --project="${project}" instances create ${user}-wks-{1,2,3,4,5,6}
   --image-project=${image_project} \
   --image-family=${image_family}
 
-for i in ${user}-wks-{1,2,3} ; do
+for i in ${user}-wks-1 ; do
   gcloud compute --project="${project}" instances add-tags "${i}" \
   --zone="${zone}" \
   --tags=master
 done
 
-for i in ${user}-wks-{4,5} ; do
+for i in ${user}-wks-{2,3} ; do
   gcloud compute --project="${project}" instances add-tags "${i}" \
   --zone="${zone}" \
   --tags=node
-done
-
-for i in ${user}-wks-6 ; do
-  gcloud compute --project="${project}" instances add-tags "${i}" \
-  --zone="${zone}" \
-  --tags=lb
 done
