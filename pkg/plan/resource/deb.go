@@ -14,7 +14,10 @@ type Deb struct {
 	//   Name: "busybox"
 	//   Name: "busybox", Suffix: "/stable"
 	//   Name: "busybox", Suffix: "=1:1.27.2-2ubuntu3.2"
-	Suffix string `structs:"suffix"`
+	Version         string `structs:"version,omitempty"`
+	Release         string `structs:"release,omitempty"`
+	DisableExcludes string `structs:"disableExcludes,omitempty"`
+	Suffix          string `structs:"suffix"`
 }
 
 var _ plan.Resource = plan.RegisterResource(&Deb{})
