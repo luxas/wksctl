@@ -568,8 +568,8 @@ func (a *MachineActuator) update(ctx context.Context, cluster *clusterv1.Cluster
 	return nil
 }
 
-// TODO: Figure out &resource.RPM return datatype 
-func OSUpgradeCommands(installer *os.OS, lockingState bool) (*, string, error) {
+// TODO: Figure out &resource.RPM return datatype
+func OSUpgradeCommands(installer *os.OS, lockingState bool) (*resource, string, error) {
 
 	if installer.Name == "centos" {
 		packageManager = &resource.RPM
@@ -643,7 +643,7 @@ func (a *MachineActuator) kubeadmUpOrDowngrade(machine *clusterv1.Machine, node 
 
 	lockingState = true
 	_, lockingCMD := OSUpgradeCommands(installer, lockingState)
-	
+
 	b.AddResource(
 		"upgrade:node-kubectl",
 		packageManager{Name: "kubectl", Version: k8sVersion, DisableExcludes: "kubernetes"},
