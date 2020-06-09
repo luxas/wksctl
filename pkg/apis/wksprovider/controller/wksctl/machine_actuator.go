@@ -609,7 +609,7 @@ func (a *MachineActuator) kubeadmUpOrDowngrade(machine *clusterv1.Machine, node 
 			&resource.Run{Script: object.String("apt-mark unhold 'kube*' || true")})
 		b.AddResource(
 			"upgrade:node-install-kubeadm",
-			&resource.Deb{Name: "kubeadm", Version: k8sVersion, DisableExcludes: "kubernetes"},
+			&resource.Deb{Name: "kubeadm", Suffix: "=" + k8sVersion + "-00"},
 			plan.DependOn("upgrade:node-unlock-kubernetes"))
 	}
 
@@ -648,7 +648,7 @@ func (a *MachineActuator) kubeadmUpOrDowngrade(machine *clusterv1.Machine, node 
 	} else if installer.Name == "ubuntu" {
 		b.AddResource(
 			"upgrade:node-kubelet",
-			&resource.Deb{Name: "kubelet", Version: k8sVersion, DisableExcludes: "kubernetes"},
+			&resource.Deb{Name: "kubelet", Suffix: "=" + k8sVersion + "-00"},
 			plan.DependOn("upgrade:node-kubeadm-upgrade"))
 	}
 	b.AddResource(
@@ -667,7 +667,7 @@ func (a *MachineActuator) kubeadmUpOrDowngrade(machine *clusterv1.Machine, node 
 	} else if installer.Name == "ubuntu" {
 		b.AddResource(
 			"upgrade:node-kubectl",
-			&resource.Deb{Name: "kubectl", Version: k8sVersion, DisableExcludes: "kubernetes"},
+			&resource.Deb{Name: "kubectl", Suffix: "=" + k8sVersion + "-00"},
 			plan.DependOn("upgrade:node-restart-kubelet"))
 		b.AddResource(
 			"upgrade:node-lock-kubernetes",
