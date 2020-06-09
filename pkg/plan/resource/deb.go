@@ -44,10 +44,6 @@ func (d *Deb) Apply(runner plan.Runner, diff plan.Diff) (propagate bool, err err
 		return false, fmt.Errorf("update cache failed: %v", err)
 	}
 
-	if !d.stateDifferent(diff.CurrentState) {
-		return false, nil
-	}
-
 	if diff.CurrentState.IsEmpty() {
 		if err := a.Install(d.Name, d.Suffix); err != nil {
 			return false, err
