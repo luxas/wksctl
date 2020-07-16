@@ -43,6 +43,7 @@ require (
 	k8s.io/client-go v0.18.5
 	k8s.io/cluster-bootstrap v0.18.5
 	k8s.io/kube-proxy v0.0.0
+	k8s.io/kubectl v0.18.6
 	k8s.io/kubernetes v1.18.5
 	k8s.io/utils v0.0.0-20200619165400-6e3d28b6ed19
 	sigs.k8s.io/cluster-api v0.3.6
